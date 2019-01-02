@@ -1,0 +1,14 @@
+setup.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt
+qichacha/__init__.py
+qichacha/items.py
+qichacha/kdlRandomHandler.py
+qichacha/middlewares.py
+qichacha/pipelines.py
+qichacha/settings.py
+qichacha/spiders/__init__.py
+qichacha/spiders/qcc.py

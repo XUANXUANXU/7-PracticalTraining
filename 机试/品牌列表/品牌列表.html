@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>品牌列表</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div id="demo">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">添加品牌</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">ID:</label>
+                <input type="text" class="form-control" id="exampleInputName2" v-model="ID">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail2">品牌名称:</label>
+                <input type="text" class="form-control" id="exampleInputEmail2" v-model="name">
+            </div>
+            <button type="button" class="btn btn-primary" @click="addlist(ID,name)">添加</button>
+            <div class="form-group">
+                <label for="exampleInputEmail2">搜索关键字:</label>
+                <input type="text" class="form-control" id="exampleInputEmail2" v-model="searchName">
+                <button type="button" class="btn btn-primary" @click="filterPersons(searchName)">搜索</button>
+            </div>
+        </form>
+    </div>
+</div>
+<table class="table table-hover table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>品牌名称</th>
+            <th>添加时间</th>
+            <th>操作(Operation)</th>
+        </tr>
+        <tr v-for="(car, index) in searchlist" :key="index">
+            <td>{{car.ID}}</td>
+            <td>{{car.name}}</td>
+            <td>{{car.date | dateString}}</td>
+            <td><a href="#" @click="deleteitem(car,index)">删除</a></td>
+        </tr>
+    </table>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.22.1/moment.js"></script>
+
+<script type="text/javascript">
+    Vue.filter('dateString', function(value, format='YYYY-MM-DD HH:mm:ss'){
+            return moment(value).format(format);
+        })
+
+	const vm = new Vue({
+        el:'#demo',
+        data:{
+            list: [],
+            searchlist:[],
+            // date:new Date(),
+        },
+        methods:{
+            addlist(ID,name){
+                var date = new Date();
+                this.list.push({ID:ID,name:name,date:date}),
+                this.searchlist.push({ID:ID,name:name,date:date})
+            },
+            deleteitem(car,index){
+                if(window.confirm(`确定删除${car.name}这个品牌吗？`)){
+					this.list.splice(index,1);
+                    this.searchlist.splice(index,1);
+				}
+
+                
+            },
+            filterPersons(searchName){
+                this.searchlist = this.list.filter(car => car.name.indexOf(searchName)!==-1);
+            }
+        },
+    })
+</script>
+</div>
+</body>
+</html>
